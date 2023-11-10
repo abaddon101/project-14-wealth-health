@@ -1,0 +1,31 @@
+@import "~bootstrap/scss/bootstrap";
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.nav-app {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 0px solid rgba(77, 115, 56, 0.623);
+  box-shadow: rgba(77, 115, 56, 0.623) 1px 1px 1px 0px;
+  margin: auto;
+
+  a {
+    text-decoration: none;
+    color: black;
+    font-size: 12px;
+  }
+}
+.welcome-message {
+  color: rgba(77, 115, 56, 0.623);
+
+  width: 40%;
+  padding: 25px;
+  margin: auto;
+}
