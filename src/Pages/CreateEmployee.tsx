@@ -30,6 +30,7 @@ function CreateEmployee() {
         </Link>
         <Link to="/EmployeeList">EMPLOYEE LIST</Link>
       </nav>
+      <h5>Create Employee</h5>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Col className="mb-3">
           <Form.Group as={Col} md="4" controlId="validationCustom01">
@@ -51,6 +52,20 @@ function CreateEmployee() {
               defaultValue=""
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+            <Form.Group as={Col} md="8" controlId="validationCustom04">
+              <Form.Label>Date of Birth</Form.Label>
+              <Form.Control type="date" placeholder="" required />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid date.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="8" controlId="validationCustom04">
+              <Form.Label>Start Date</Form.Label>
+              <Form.Control type="date" placeholder="" required />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid date.
+              </Form.Control.Feedback>
+            </Form.Group>
           </Form.Group>
           <Form.Group
             as={Col}
@@ -60,7 +75,7 @@ function CreateEmployee() {
         </Col>
         <div className="container-border">
           <h4>Adress</h4>
-          <Form.Group as={Col} md="6" controlId="validationCustom03">
+          <Form.Group as={Col} md="6" controlId="validationCustom05">
             <Form.Label>Street</Form.Label>
             <Form.Control type="text" placeholder="Street" required />
             <Form.Control.Feedback type="invalid">
@@ -68,14 +83,14 @@ function CreateEmployee() {
             </Form.Control.Feedback>
           </Form.Group>
           <Col className="mb-3">
-            <Form.Group as={Col} md="6" controlId="validationCustom03">
+            <Form.Group as={Col} md="6" controlId="validationCustom06">
               <Form.Label>City</Form.Label>
               <Form.Control type="text" placeholder="City" required />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid city.
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="6" controlId="validationCustom03">
+            <Form.Group as={Col} md="6" controlId="validationCustom07">
               <Form.Label>State</Form.Label>
               <Form.Select aria-label="Default select example">
                 <option value=""></option>
@@ -84,7 +99,7 @@ function CreateEmployee() {
                 <option value="3">Three</option>
               </Form.Select>
             </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationCustom05">
+            <Form.Group as={Col} md="3" controlId="validationCustom08">
               <Form.Label>Zip Code</Form.Label>
               <Form.Control type="text" placeholder="Zip" required />
               <Form.Control.Feedback type="invalid">
@@ -94,7 +109,7 @@ function CreateEmployee() {
           </Col>
         </div>
 
-        <Form.Group as={Col} md="6" controlId="validationCustom03">
+        <Form.Group as={Col} md="6" controlId="validationCustom09">
           <Form.Label>Departments</Form.Label>
           <Form.Control type="number" />
           <Form.Select aria-label="Default select example">
