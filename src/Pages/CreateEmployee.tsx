@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateField, resetForm } from "../Features/formSlice";
 import { RootState } from "../Features/Store";
 import logoWealthHealth from "../Assets/logoWealthHealth.jpg";
+import { states } from "../Datas/AmericanStates";
+import { departments } from "../Datas/DepartmentsCompany";
 
 const CreateEmployee: React.FC = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,7 @@ const CreateEmployee: React.FC = () => {
     dispatch(updateField({ field, value: value.toString() }));
   };
 
+  // ...
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -35,6 +38,7 @@ const CreateEmployee: React.FC = () => {
       console.log("Form submitted:", formState);
     }
   };
+  // ...
 
   return (
     <div>
@@ -133,15 +137,25 @@ const CreateEmployee: React.FC = () => {
                 Please provide a valid city.
               </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group as={Col} md="6" controlId="validationCustom07">
               <Form.Label>State</Form.Label>
-              <Form.Select aria-label="Default select example">
-                <option value=""></option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+              <Form.Select
+                aria-label="State"
+                value={formState.stateCountry}
+                onChange={(e) =>
+                  handleFieldChange("stateCountry", e.target.value)
+                }
+              >
+                <option value="">Select State</option>
+                {states.map((state) => (
+                  <option key={state.abbreviation} value={state.abbreviation}>
+                    {state.name}
+                  </option>
+                ))}
               </Form.Select>
             </Form.Group>
+
             <Form.Group as={Col} md="3" controlId="validationCustom08">
               <Form.Label>Zip Code</Form.Label>
               <Form.Control type="text" placeholder="Zip" required />
@@ -154,12 +168,17 @@ const CreateEmployee: React.FC = () => {
 
         <Form.Group as={Col} md="6" controlId="validationCustom09">
           <Form.Label>Departments</Form.Label>
-
-          <Form.Select aria-label="Default select example">
-            <option></option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <Form.Select
+            aria-label="Departments"
+            value={formState.departments}
+            onChange={(e) => handleFieldChange("departments", e.target.value)}
+          >
+            <option value="">Select Department</option>
+            {departments.map((department) => (
+              <option key={department.name} value={department.name}>
+                {department.name}
+              </option>
+            ))}
           </Form.Select>
         </Form.Group>
 
