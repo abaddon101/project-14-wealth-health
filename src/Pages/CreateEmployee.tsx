@@ -13,16 +13,20 @@ import logoWealthHealth from "../Assets/logoWealthHealth.jpg";
 import { states } from "../Datas/AmericanStates";
 import { departments } from "../Datas/DepartmentsCompany";
 
+// CreateEmployee component represents the form for adding a new employee.
 const CreateEmployee: React.FC = () => {
+  // Redux hooks for managing state and dispatching actions.
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.form);
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
 
+  // Function to handle changes in form fields and update Redux state.
   const handleFieldChange = (field: string, value: string | number) => {
     dispatch(updateField({ field, value: value.toString() }));
   };
 
+  // Function to handle form submission.
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -32,10 +36,11 @@ const CreateEmployee: React.FC = () => {
       event.stopPropagation();
       setValidated(true);
     } else {
+      // Reset the form state and validation.
       dispatch(resetForm());
       setValidated(false);
 
-      // Créez un objet Employee avec les données du formulaire
+      // Create an Employee object with the form data.
       const employeeData: Employee = {
         id: Date.now(),
         firstName: formState.firstName,
@@ -49,18 +54,20 @@ const CreateEmployee: React.FC = () => {
         departments: formState.departments,
       };
 
-      // Dispatchez l'action pour ajouter l'employé à la liste
+      // Dispatch the action to add the employee to the list.
       dispatch(addEmployee(employeeData));
 
+      // Log the submitted form data.
       console.log("Form submitted:", employeeData);
 
+      // Navigate to the EmployeeList page.
       navigate("/EmployeeList");
     }
   };
-  // ...
 
   return (
     <div>
+      {/* Navigation links */}
       <nav className="nav-app">
         <Link to="/">
           <img src={logoWealthHealth} className="App-logo" alt="logo" />
@@ -69,7 +76,9 @@ const CreateEmployee: React.FC = () => {
         <Link to="/EmployeeList">Employee List</Link>
       </nav>
       <h5>Create Employee</h5>
+      {/* Employee creation form */}
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        {/* ... (Form fields and validation components) */}
         <Col className="mb-3">
           <Form.Group as={Col} md="4" controlId="validationCustom01">
             <Form.Label>First name</Form.Label>

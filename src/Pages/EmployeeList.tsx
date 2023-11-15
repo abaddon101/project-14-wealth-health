@@ -7,19 +7,25 @@ import Table from "react-bootstrap/Table";
 import { RootState } from "../Features/Store";
 import { Employee } from "../Features/employeeSlice";
 
+// EmployeeList component displays a table of employees.
 function EmployeeList() {
-  // const formState = useSelector((state: RootState) => state.form);
+  // Retrieve the list of employees from the Redux store.
   const employees = useSelector((state: RootState) => state.employees.list);
 
+  // Log the list of employees for debugging or monitoring purposes.
   console.log("Employee List:", employees);
+
   return (
     <div>
+      {/* Navigation links */}
       <nav className="nav-app">
         <Link to="/">
           <img src={logoWealthHealth} className="App-logo" alt="logo" />
         </Link>
         <Link to="/CreateEmployee">CREATE EMPLOYEE</Link>
       </nav>
+
+      {/* Table displaying employee information */}
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -35,6 +41,7 @@ function EmployeeList() {
           </tr>
         </thead>
         <tbody>
+          {/* Map through the employees and display their information in rows */}
           {employees.map((employee: Employee) => (
             <tr key={employee.id}>
               <td>{employee.firstName}</td>
