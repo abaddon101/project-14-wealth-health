@@ -1,7 +1,7 @@
 // formSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface FormState {
+export interface FormState {
   firstName: string;
   lastName: string;
   dateOfBirth: number;
@@ -12,6 +12,8 @@ interface FormState {
   zipCode: number;
   departments: string;
 }
+
+
 
 const initialState: FormState = {
   firstName: "",
@@ -24,6 +26,7 @@ const initialState: FormState = {
   zipCode: 0,
   departments: "",
 };
+
 
 const formSlice = createSlice({
   name: "form",
@@ -40,5 +43,8 @@ const formSlice = createSlice({
   },
 });
 
+
+
 export const { updateField, resetForm } = formSlice.actions;
+
 export default formSlice.reducer;

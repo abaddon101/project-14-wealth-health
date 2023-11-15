@@ -1,9 +1,17 @@
+// EmployeeList.tsx
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import logoWealthHealth from "../Assets/logoWealthHealth.jpg";
 import Table from "react-bootstrap/Table";
+import { RootState } from "../Features/Store";
+import { Employee } from "../Features/employeeSlice";
 
 function EmployeeList() {
+  // const formState = useSelector((state: RootState) => state.form);
+  const employees = useSelector((state: RootState) => state.employees.list);
+
+  console.log("Employee List:", employees);
   return (
     <div>
       <nav className="nav-app">
@@ -27,39 +35,19 @@ function EmployeeList() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
+          {employees.map((employee: Employee) => (
+            <tr key={employee.id}>
+              <td>{employee.firstName}</td>
+              <td>{employee.lastName}</td>
+              <td>{employee.startDate}</td>
+              <td>{employee.departments}</td>
+              <td>{employee.dateOfBirth}</td>
+              <td>{employee.street}</td>
+              <td>{employee.city}</td>
+              <td>{employee.stateCountry}</td>
+              <td>{employee.zipCode}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>

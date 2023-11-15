@@ -1,11 +1,13 @@
 // CreateEmployee.tsx
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { updateField, resetForm } from "../Features/formSlice";
+import { addEmployee, Employee } from "../Features/employeeSlice";
 import { RootState } from "../Features/Store";
 import logoWealthHealth from "../Assets/logoWealthHealth.jpg";
 import { states } from "../Datas/AmericanStates";
@@ -15,12 +17,12 @@ const CreateEmployee: React.FC = () => {
   const dispatch = useDispatch();
   const formState = useSelector((state: RootState) => state.form);
   const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
 
   const handleFieldChange = (field: string, value: string | number) => {
     dispatch(updateField({ field, value: value.toString() }));
   };
 
-  // ...
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -28,14 +30,31 @@ const CreateEmployee: React.FC = () => {
 
     if (form.checkValidity() === false) {
       event.stopPropagation();
-      // If the form is invalid, set validated to true to display error messages
       setValidated(true);
     } else {
-      // If the form is valid, reset the form and set validated to false
       dispatch(resetForm());
       setValidated(false);
-      // Additional actions you want to perform on successful form submission
-      console.log("Form submitted:", formState);
+
+      // Créez un objet Employee avec les données du formulaire
+      const employeeData: Employee = {
+        id: Date.now(),
+        firstName: formState.firstName,
+        lastName: formState.lastName,
+        dateOfBirth: formState.dateOfBirth,
+        startDate: formState.startDate,
+        street: formState.street,
+        city: formState.city,
+        stateCountry: formState.stateCountry,
+        zipCode: formState.zipCode,
+        departments: formState.departments,
+      };
+
+      // Dispatchez l'action pour ajouter l'employé à la liste
+      dispatch(addEmployee(employeeData));
+
+      console.log("Form submitted:", employeeData);
+
+      navigate("/EmployeeList");
     }
   };
   // ...
