@@ -186,7 +186,13 @@ const CreateEmployee: React.FC = () => {
 
             <Form.Group as={Col} md="3" controlId="validationCustom08">
               <Form.Label>Zip Code</Form.Label>
-              <Form.Control type="text" placeholder="Zip" required />
+              <Form.Control
+                required
+                type="text"
+                placeholder="ZipCode"
+                value={formState.zipCode}
+                onChange={(e) => handleFieldChange("zipCode", e.target.value)}
+              />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid zip.
               </Form.Control.Feedback>

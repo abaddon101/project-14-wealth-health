@@ -15,17 +15,42 @@ function EmployeeList() {
   const employees = useSelector((state: RootState) => state.employees.list);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+
   // Calculer les informations pour l'affichage
-  const startRange = employees.length > 0 ? 1 : 0;
-  const endRange = employees.length;
+  const startRange = (currentPage - 1) * entriesPerPage + 1;
+  const endRange = Math.min(currentPage * entriesPerPage, employees.length);
   const totalEmployees = employees.length;
+  const totalPages = Math.ceil(totalEmployees / entriesPerPage);
 
   // Log the list of employees for debugging or monitoring purposes.
   console.log("Employee List:", employees);
+
   const handleEntriesPerPageChange = (value: number) => {
     setEntriesPerPage(value);
     setCurrentPage(1); // Reset to the first page when changing entries per page
   };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+
+  const handleGoToPage = (pageNumber: number) => {
+    setCurrentPage(Math.max(1, Math.min(pageNumber, totalPages)));
+  };
+
+  // Générer les boutons pour la sélection de page
+  const pageButtons = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageButtons.push(
+      <button key={i} onClick={() => handleGoToPage(i)} disabled={i === currentPage}>
+        {i}
+      </button>
+    );
+  }
 
   return (
     <div>
@@ -37,6 +62,7 @@ function EmployeeList() {
         <Link to="/CreateEmployee">CREATE EMPLOYEE</Link>
       </nav>
       <EntriesPerPageDropdown onChange={handleEntriesPerPageChange} />
+
       {/* Table displaying employee information */}
       <Table striped bordered hover>
         <thead>
@@ -54,19 +80,21 @@ function EmployeeList() {
         </thead>
         <tbody>
           {/* Map through the employees and display their information in rows */}
-          {employees.map((employee: Employee) => (
-            <tr key={employee.id}>
-              <td>{employee.firstName}</td>
-              <td>{employee.lastName}</td>
-              <td>{employee.startDate}</td>
-              <td>{employee.departments}</td>
-              <td>{employee.dateOfBirth}</td>
-              <td>{employee.street}</td>
-              <td>{employee.city}</td>
-              <td>{employee.stateCountry}</td>
-              <td>{employee.zipCode}</td>
-            </tr>
-          ))}
+          {employees
+            .slice(startRange - 1, endRange)
+            .map((employee: Employee) => (
+              <tr key={employee.id}>
+                <td>{employee.firstName}</td>
+                <td>{employee.lastName}</td>
+                <td>{employee.startDate}</td>
+                <td>{employee.departments}</td>
+                <td>{employee.dateOfBirth}</td>
+                <td>{employee.street}</td>
+                <td>{employee.city}</td>
+                <td>{employee.stateCountry}</td>
+                <td>{employee.zipCode}</td>
+              </tr>
+            ))}
         </tbody>
       </Table>
       <TableInfo
@@ -74,6 +102,17 @@ function EmployeeList() {
         endRange={endRange}
         totalEmployees={totalEmployees}
       />
+
+      {/* Pagination controls */}
+      <div className="pagination-controls">
+        <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        {pageButtons}
+        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+          Next
+        </button>
+      </div>
     </div>
   );
 }
