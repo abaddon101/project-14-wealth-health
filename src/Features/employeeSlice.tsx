@@ -13,6 +13,7 @@ export interface Employee {
   stateCountry: string;
   zipCode: number;
   departments: string;
+  [key: string]: string | number; // Index signature to allow any string key
 }
 
 // Define the shape of the state managed by this slice

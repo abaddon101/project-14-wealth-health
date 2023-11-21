@@ -14,7 +14,11 @@ const TableInfo: React.FC<TableInfoProps> = ({
 }) => {
   return (
     <div>
-      Showing {startRange} to {endRange} of {totalEmployees} entries
+      Showing{" "}
+      {totalEmployees > 0
+        ? `${startRange} to ${endRange} of ${totalEmployees}`
+        : "0 to 0 of 0"}{" "}
+      entries
     </div>
   );
 };

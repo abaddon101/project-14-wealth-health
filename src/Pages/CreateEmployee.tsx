@@ -72,7 +72,7 @@ const CreateEmployee: React.FC = () => {
         <Link to="/">
           <img src={logoWealthHealth} className="App-logo" alt="logo" />
         </Link>
-        <Link to="/CreateEmployee">CREATE EMPLOYEE</Link>
+        {/* <Link to="/CreateEmployee">CREATE EMPLOYEE</Link> */}
         <Link to="/EmployeeList">Employee List</Link>
       </nav>
       <h5>Create Employee</h5>
