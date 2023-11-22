@@ -25,7 +25,7 @@ function EmployeeList() {
   const totalPages = Math.ceil(totalEmployees / entriesPerPage);
 
   // Log the list of employees for debugging or monitoring purposes.
-  console.log("Employee List:", employees);
+  // console.log("Employee List:", employees);
 
   // sort states
   const [sortKey, setSortKey] = useState<string>(""); // Clé de tri
@@ -92,6 +92,11 @@ function EmployeeList() {
   const handleGoToPage = (pageNumber: number) => {
     setCurrentPage(Math.max(1, Math.min(pageNumber, totalPages)));
   };
+
+  const startIndex = (currentPage - 1) * entriesPerPage;
+  const endIndex = startIndex + entriesPerPage;
+  const currentEmployees = filteredEmployees.slice(startIndex, endIndex);
+
 
   // Générer les boutons pour la sélection de page
   const pageButtons = [];
@@ -200,7 +205,7 @@ function EmployeeList() {
               <td colSpan={9}>No data available in table</td>
             </tr>
           ) : (
-            filteredEmployees.map((employee: Employee) => (
+            currentEmployees.map((employee: Employee) => (
               <tr key={employee.id}>
                 <td>{employee.firstName}</td>
                 <td>{employee.lastName}</td>
