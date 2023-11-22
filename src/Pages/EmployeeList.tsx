@@ -9,6 +9,7 @@ import { Employee } from "../Features/employeeSlice";
 import TableInfo from "../Components/Table/TableInfo";
 import EntriesPerPageDropdown from "../Components/Table/EntriesPerPageDropdown";
 import SortIcon from "../Components/Table/SortIcon";
+import SearchBar from "../Components/Table/SearchBar";
 
 // EmployeeList component displays a table of employees.
 function EmployeeList() {
@@ -31,6 +32,11 @@ function EmployeeList() {
   const [sortDirection, setSortDirection] = useState<
     "asc" | "desc" | undefined
   >(undefined); // Direction de tri
+
+  //filter searchBar
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  // console.log(searchTerm);
+  
 
   // Fonction pour gérer le clic sur l'en-tête de colonne pour déclencher le tri
   const handleSort = (key: string) => {
@@ -56,6 +62,19 @@ function EmployeeList() {
       return 0;
     }
   });
+
+  // Fonction pour gérer le changement de terme de recherche
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
+  };
+
+  // Filtrer les employés en fonction du terme de recherche
+  const filteredEmployees = sortedEmployees.filter((employee) =>
+    Object.values(employee)
+      .join(" ")
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
 
   const handleEntriesPerPageChange = (value: number) => {
     setEntriesPerPage(value);
@@ -88,6 +107,12 @@ function EmployeeList() {
     );
   }
 
+  const isTableEmpty = employees.length === 0 && searchTerm === "";
+  const isFilterResultEmpty =
+    filteredEmployees.length === 0 && searchTerm !== "";
+
+  // ...
+
   return (
     <div>
       {/* Navigation links */}
@@ -97,81 +122,85 @@ function EmployeeList() {
         </Link>
         <Link to="/CreateEmployee">CREATE EMPLOYEE</Link>
       </nav>
+      <SearchBar
+        onSearch={handleSearch}
+        isFilterActive={filteredEmployees.length < 0}
+      />
       <EntriesPerPageDropdown onChange={handleEntriesPerPageChange} />
 
       {/* Table displaying employee information */}
-      {employees.length > 0 ? (
-        <Table striped bordered hover>
-          <thead>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th onClick={() => handleSort("firstName")}>
+              First Name{" "}
+              <SortIcon
+                direction={sortKey === "firstName" ? sortDirection : undefined}
+              />
+            </th>
+            <th onClick={() => handleSort("lastName")}>
+              Last Name{" "}
+              <SortIcon
+                direction={sortKey === "lastName" ? sortDirection : undefined}
+              />
+            </th>
+            <th onClick={() => handleSort("startDate")}>
+              Start Date{" "}
+              <SortIcon
+                direction={sortKey === "startDate" ? sortDirection : undefined}
+              />
+            </th>
+            <th onClick={() => handleSort("departments")}>
+              Department{" "}
+              <SortIcon
+                direction={
+                  sortKey === "departments" ? sortDirection : undefined
+                }
+              />
+            </th>
+            <th onClick={() => handleSort("dateOfBirth")}>
+              Date of Birth{" "}
+              <SortIcon
+                direction={
+                  sortKey === "dateOfBirth" ? sortDirection : undefined
+                }
+              />
+            </th>
+            <th onClick={() => handleSort("street")}>
+              Street{" "}
+              <SortIcon
+                direction={sortKey === "street" ? sortDirection : undefined}
+              />
+            </th>
+            <th onClick={() => handleSort("city")}>
+              City{" "}
+              <SortIcon
+                direction={sortKey === "city" ? sortDirection : undefined}
+              />
+            </th>
+            <th onClick={() => handleSort("stateCountry")}>
+              State{" "}
+              <SortIcon
+                direction={
+                  sortKey === "stateCountry" ? sortDirection : undefined
+                }
+              />
+            </th>
+            <th onClick={() => handleSort("zipCode")}>
+              Zip Code{" "}
+              <SortIcon
+                direction={sortKey === "zipCode" ? sortDirection : undefined}
+              />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {isTableEmpty && !isFilterResultEmpty ? (
             <tr>
-              <th onClick={() => handleSort("firstName")}>
-                First Name{" "}
-                <SortIcon
-                  direction={
-                    sortKey === "firstName" ? sortDirection : undefined
-                  }
-                />
-              </th>
-              <th onClick={() => handleSort("lastName")}>
-                Last Name{" "}
-                <SortIcon
-                  direction={sortKey === "lastName" ? sortDirection : undefined}
-                />
-              </th>
-              <th onClick={() => handleSort("startDate")}>
-                Start Date{" "}
-                <SortIcon
-                  direction={
-                    sortKey === "startDate" ? sortDirection : undefined
-                  }
-                />
-              </th>
-              <th onClick={() => handleSort("departments")}>
-                Department{" "}
-                <SortIcon
-                  direction={
-                    sortKey === "departments" ? sortDirection : undefined
-                  }
-                />
-              </th>
-              <th onClick={() => handleSort("dateOfBirth")}>
-                Date of Birth{" "}
-                <SortIcon
-                  direction={
-                    sortKey === "dateOfBirth" ? sortDirection : undefined
-                  }
-                />
-              </th>
-              <th onClick={() => handleSort("street")}>
-                Street{" "}
-                <SortIcon
-                  direction={sortKey === "street" ? sortDirection : undefined}
-                />
-              </th>
-              <th onClick={() => handleSort("city")}>
-                City{" "}
-                <SortIcon
-                  direction={sortKey === "city" ? sortDirection : undefined}
-                />
-              </th>
-              <th onClick={() => handleSort("stateCountry")}>
-                State{" "}
-                <SortIcon
-                  direction={
-                    sortKey === "stateCountry" ? sortDirection : undefined
-                  }
-                />
-              </th>
-              <th onClick={() => handleSort("zipCode")}>
-                Zip Code{" "}
-                <SortIcon
-                  direction={sortKey === "zipCode" ? sortDirection : undefined}
-                />
-              </th>
+              <td colSpan={9}>No data available in table</td>
             </tr>
-          </thead>
-          <tbody>
-            {sortedEmployees.map((employee: Employee) => (
+          ) : (
+            filteredEmployees.map((employee: Employee) => (
               <tr key={employee.id}>
                 <td>{employee.firstName}</td>
                 <td>{employee.lastName}</td>
@@ -183,35 +212,22 @@ function EmployeeList() {
                 <td>{employee.stateCountry}</td>
                 <td>{employee.zipCode}</td>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      ) : (
-        <Table>
-          <thead>
+            ))
+          )}
+          {isFilterResultEmpty && !isTableEmpty && (
             <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Start Date</th>
-              <th>Department</th>
-              <th>Date of Birth</th>
-              <th>Street</th>
-              <th>City</th>
-              <th>State</th>
-              <th>Zip Code</th>
+              <td colSpan={9}>No matching records found</td>
             </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colSpan={9}>No data available in table</td>
-            </tr>
-          </tbody>
-        </Table>
-      )}
+          )}
+        </tbody>
+      </Table>
+
       <TableInfo
         startRange={startRange}
         endRange={endRange}
         totalEmployees={totalEmployees}
+        filteredEmployees={filteredEmployees.length}
+        searchTerm={searchTerm} 
       />
 
       {/* Pagination controls */}
