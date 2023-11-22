@@ -6,8 +6,9 @@ interface TableInfoProps {
   endRange: number;
   totalEmployees: number;
   filteredEmployees: number;
-  searchTerm: string; // Ajoutez searchTerm à la liste des propriétés
+  searchTerm: string;
 }
+
 const TableInfo: React.FC<TableInfoProps> = ({
   startRange,
   endRange,
@@ -15,13 +16,6 @@ const TableInfo: React.FC<TableInfoProps> = ({
   filteredEmployees,
   searchTerm,
 }) => {
-  // const [searchTerm, setSearchTerm] = useState<string>("");
-  // console.log("Search Term:", searchTerm);
-
-  // Utilisation de la condition (filtered from total entries)
-  // uniquement si filteredEmployees est supérieur à 0 et totalEmployees supérieur à 0
-  // const trimmedSearchTerm = searchTerm.trim();
-
   const entriesInfo =
     searchTerm.trim().length > 0
       ? ` (filtered from ${totalEmployees} total entries)`
@@ -29,7 +23,7 @@ const TableInfo: React.FC<TableInfoProps> = ({
 
   return (
     <div>
-      Showing {startRange} to {filteredEmployees} of {filteredEmployees} entries
+      Showing {filteredEmployees === 0 ? 0 : startRange} to {filteredEmployees} of {filteredEmployees} entries
       {entriesInfo}
     </div>
   );
