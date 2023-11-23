@@ -8,7 +8,7 @@ function Home() {
   return (
     <div>
       {/* Navigation links */}
-      <nav className="nav-app">
+      <nav className="header-container">
         <img src={logoWealthHealth} className="App-logo" alt="logo" />
         <Link to="/CreateEmployee">CREATE EMPLOYEE</Link>
         <Link to="/EmployeeList">EMPLOYEE LIST</Link>

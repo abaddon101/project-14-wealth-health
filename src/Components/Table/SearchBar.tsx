@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 
 interface SearchBarProps {
   onSearch: (term: string) => void;
-  isFilterActive: boolean; // New prop to indicate if filtering is active
+  isFilterActive: boolean; // Nouvelle propriété pour indiquer si le filtre est actif
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isFilterActive }) => {
@@ -20,10 +20,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, isFilterActive }) => {
   }, [searchTerm, onSearch]);
 
   return (
-    <div>
+    <div className="SearchBar"> {/* Ajouter la classe ici */}
+      Search:
       <input
         type="text"
-        placeholder="Search (minimum 3 characters)..."
+        placeholder=""
         value={searchTerm}
         onChange={handleSearchChange}
       />

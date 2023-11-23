@@ -23,20 +23,18 @@ const EntriesPerPageDropdown: React.FC<EntriesPerPageDropdownProps> = ({
   };
 
   return (
-    <Dropdown onSelect={handleSelect}>
-      Show
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-        {` ${selectedOption} `}
-      </Dropdown.Toggle>
-      entries
-      <Dropdown.Menu>
-        {entriesPerPageOptions.map((option) => (
-          <Dropdown.Item key={option} eventKey={String(option)}>
-            {` ${option} `}
-          </Dropdown.Item>
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
+    <div className="EntriesPerPageDropdown"> {/* Ajouter la classe ici */}
+      <Dropdown onSelect={handleSelect}>
+        Show <Dropdown.Toggle variant="success" id="dropdown-basic">{`  ${selectedOption}  `}</Dropdown.Toggle> entries
+        <Dropdown.Menu>
+          {entriesPerPageOptions.map((option) => (
+            <Dropdown.Item key={option} eventKey={String(option)}>
+              {` ${option} `}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+    </div>
   );
 };
 

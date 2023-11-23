@@ -36,7 +36,6 @@ function EmployeeList() {
   //filter searchBar
   const [searchTerm, setSearchTerm] = useState<string>("");
   // console.log(searchTerm);
-  
 
   // Fonction pour gérer le clic sur l'en-tête de colonne pour déclencher le tri
   const handleSort = (key: string) => {
@@ -97,7 +96,6 @@ function EmployeeList() {
   const endIndex = startIndex + entriesPerPage;
   const currentEmployees = filteredEmployees.slice(startIndex, endIndex);
 
-
   // Générer les boutons pour la sélection de page
   const pageButtons = [];
   for (let i = 1; i <= totalPages; i++) {
@@ -121,17 +119,19 @@ function EmployeeList() {
   return (
     <div>
       {/* Navigation links */}
-      <nav className="nav-app">
+      <nav className="header-container">
         <Link to="/">
           <img src={logoWealthHealth} className="App-logo" alt="logo" />
         </Link>
-        <Link to="/CreateEmployee">CREATE EMPLOYEE</Link>
+        <Link to="/CreateEmployee">Create Employee</Link>
       </nav>
-      <SearchBar
-        onSearch={handleSearch}
-        isFilterActive={filteredEmployees.length < 0}
-      />
-      <EntriesPerPageDropdown onChange={handleEntriesPerPageChange} />
+      <div className="header-table">
+        <EntriesPerPageDropdown onChange={handleEntriesPerPageChange} />
+        <SearchBar
+          onSearch={handleSearch}
+          isFilterActive={filteredEmployees.length < 0}
+        />
+      </div>
 
       {/* Table displaying employee information */}
       <Table striped bordered hover>
@@ -232,7 +232,7 @@ function EmployeeList() {
         endRange={endRange}
         totalEmployees={totalEmployees}
         filteredEmployees={filteredEmployees.length}
-        searchTerm={searchTerm} 
+        searchTerm={searchTerm}
       />
 
       {/* Pagination controls */}

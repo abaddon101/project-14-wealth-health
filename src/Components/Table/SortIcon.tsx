@@ -1,6 +1,6 @@
 // SortIcon.tsx
 import React from "react";
-import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 // import "./SortIcon.css"; // Assurez-vous d'importer le fichier CSS pour vos styles
 
 interface SortIconProps {
@@ -10,8 +10,8 @@ interface SortIconProps {
 const SortIcon: React.FC<SortIconProps> = ({ direction }) => {
   return (
     <div className={`sort-icon ${direction}`}>
-      {direction === "asc" && <FaArrowUp />}
-      {direction === "desc" && <FaArrowDown />}
+      {direction === "asc" && <AiOutlineArrowUp className="icon-up" />}
+      {direction === "desc" && <AiOutlineArrowDown className="icon-down" />}
     </div>
   );
 };
