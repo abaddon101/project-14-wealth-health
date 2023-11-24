@@ -11,7 +11,7 @@ export interface Employee {
   street: string;
   city: string;
   stateCountry: string;
-  zipCode: number;
+  zipCode: string;
   departments: string;
   [key: string]: string | number; // Index signature to allow any string key
 }

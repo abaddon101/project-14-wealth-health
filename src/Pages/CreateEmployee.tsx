@@ -6,6 +6,8 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import Modal from "react-bootstrap/Modal";
+
 import { useDispatch, useSelector } from "react-redux";
 import { updateField, resetForm } from "../Features/formSlice";
 import { addEmployee, Employee } from "../Features/employeeSlice";
@@ -23,6 +25,14 @@ const CreateEmployee: React.FC = () => {
   const formState = useSelector((state: RootState) => state.form);
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
+
+  const [showModal, setShowModal] = useState(false);
+  const [popupText, setPopupText] = useState("");
+
+  const handleShowModal = (text: string) => {
+    setPopupText(text);
+    setShowModal(true);
+  };
 
   // Function to handle changes in form fields and update Redux state.
   const handleFieldChange = (field: string, value: string | number) => {
@@ -49,6 +59,13 @@ const CreateEmployee: React.FC = () => {
       dispatch(resetForm());
       setValidated(false);
 
+      // Add validation for State and Department fields
+      if (!formState.stateCountry || !formState.departments) {
+        // Gérer le cas où les champs ne sont pas remplis
+        // Vous pouvez afficher un message d'erreur ou effectuer une action appropriée
+        return;
+      }
+
       // Create an Employee object with the form data.
       const employeeData: Employee = {
         id: Date.now(),
@@ -69,8 +86,11 @@ const CreateEmployee: React.FC = () => {
       // Log the submitted form data.
       console.log("Form submitted:", employeeData);
 
+      // Show the success pop-up
+      handleShowModal("Employee has been successfully created!");
+
       // Navigate to the EmployeeList page.
-      navigate("/EmployeeList");
+      // navigate("/EmployeeList");
     }
   };
 
@@ -104,10 +124,14 @@ const CreateEmployee: React.FC = () => {
                   onChange={(e) =>
                     handleFieldChange("firstName", e.target.value)
                   }
+                  className={
+                    validated && formState.firstName.trim() === ""
+                      ? "is-invalid"
+                      : ""
+                  }
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
-
               <Form.Group as={Col} md="4" controlId="validationCustom02">
                 <Form.Label>Last name</Form.Label>
                 <Form.Control
@@ -126,6 +150,7 @@ const CreateEmployee: React.FC = () => {
               <Form.Group as={Col} md="4" controlId="validationCustom04">
                 <Form.Label>Date of Birth </Form.Label>{" "}
                 <DatePicker
+                  required
                   selected={
                     formState.dateOfBirth
                       ? new Date(formState.dateOfBirth)
@@ -149,6 +174,7 @@ const CreateEmployee: React.FC = () => {
               <Form.Group as={Col} md="4" controlId="validationCustom04">
                 <Form.Label>Start Date </Form.Label>
                 <DatePicker
+                  required
                   selected={
                     formState.startDate ? new Date(formState.startDate) : null
                   }
@@ -219,10 +245,16 @@ const CreateEmployee: React.FC = () => {
                     }}
                     menuPlacement="bottom"
                     placeholder="Select State"
+                    className={
+                      validated && !formState.stateCountry ? "is-invalid" : ""
+                    }
                     styles={{
                       menu: (provided) => ({ ...provided, color: "black" }),
                     }}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Please select a state.
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group as={Col} md="6" controlId="validationCustom09">
@@ -247,10 +279,16 @@ const CreateEmployee: React.FC = () => {
                     }}
                     menuPlacement="bottom"
                     placeholder="Select Department"
+                    className={
+                      validated && !formState.departments ? "is-invalid" : ""
+                    }
                     styles={{
                       menu: (provided) => ({ ...provided, color: "black" }),
                     }}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Please select a department.
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Row>
 
@@ -258,14 +296,19 @@ const CreateEmployee: React.FC = () => {
                 <Form.Label>Zip Code</Form.Label>
                 <Form.Control
                   required
-                  type="text"
+                  type="number"
                   placeholder="ZipCode"
-                  value={formState.zipCode}
+                  value={
+                    formState.zipCode !== null
+                      ? formState.zipCode.toString()
+                      : ""
+                  }
                   onChange={(e) => handleFieldChange("zipCode", e.target.value)}
+                  className={
+                    validated && formState.zipCode === null ? "is-invalid" : ""
+                  }
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid zip.
-                </Form.Control.Feedback>
+                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
             </Col>
           </div>
@@ -275,6 +318,18 @@ const CreateEmployee: React.FC = () => {
           </Button>
         </Form>
       </div>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Success</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{popupText}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

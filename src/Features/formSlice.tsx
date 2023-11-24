@@ -10,7 +10,7 @@ export interface FormState {
   street: string;
   city: string;
   stateCountry: string;
-  zipCode: number;
+  zipCode: string;
   departments: string;
 }
 
@@ -23,7 +23,7 @@ const initialState: FormState = {
   street: "",
   city: "",
   stateCountry: "",
-  zipCode: 0,
+  zipCode: "",
   departments: "",
 };
 
