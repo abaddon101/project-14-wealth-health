@@ -1,4 +1,6 @@
 // EmployeeList.tsx
+
+// Import necessary modules from React and external libraries
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -18,7 +20,7 @@ function EmployeeList() {
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Calculer les informations pour l'affichage
+  // Calcul informations to display
   const startRange = (currentPage - 1) * entriesPerPage + 1;
   const endRange = Math.min(currentPage * entriesPerPage, employees.length);
   const totalEmployees = employees.length;
@@ -31,27 +33,27 @@ function EmployeeList() {
   const [sortKey, setSortKey] = useState<string>(""); // Clé de tri
   const [sortDirection, setSortDirection] = useState<
     "asc" | "desc" | undefined
-  >(undefined); // Direction de tri
+  >(undefined); // Sort direction
 
   //filter searchBar
   const [searchTerm, setSearchTerm] = useState<string>("");
   // console.log(searchTerm);
 
-  // Fonction pour gérer le clic sur l'en-tête de colonne pour déclencher le tri
+  // Function for manage click on header'column which start the sort
   const handleSort = (key: string) => {
     if (sortKey === key) {
-      // Inverser la direction de tri si la même clé est cliquée à nouveau
+      // Inverse sort'direction if the same key is clicked again
       setSortDirection((prevDirection) =>
         prevDirection === "asc" ? "desc" : "asc"
       );
     } else {
-      // Changer la clé de tri et définir la direction par défaut
+      // Change sort'key and define direction  et définir la direction by default
       setSortKey(key);
       setSortDirection("asc");
     }
   };
 
-  // Fonction pour trier les employés en fonction de la clé et de la direction de tri
+  // Function for sort employees depending key and sort'direction
   const sortedEmployees = [...employees].sort((a, b) => {
     if (sortDirection === "asc") {
       return a[sortKey].toString().localeCompare(b[sortKey].toString());
@@ -62,12 +64,12 @@ function EmployeeList() {
     }
   });
 
-  // Fonction pour gérer le changement de terme de recherche
+  // Function for manage the change of research'term
   const handleSearch = (term: string) => {
     setSearchTerm(term);
   };
 
-  // Filtrer les employés en fonction du terme de recherche
+  // Filter employee depending the research'term
   const filteredEmployees = sortedEmployees.filter((employee) =>
     Object.values(employee)
       .join(" ")
@@ -96,7 +98,7 @@ function EmployeeList() {
   const endIndex = startIndex + entriesPerPage;
   const currentEmployees = filteredEmployees.slice(startIndex, endIndex);
 
-  // Générer les boutons pour la sélection de page
+  // Generate buttons for selection of the page
   const pageButtons = [];
   for (let i = 1; i <= totalPages; i++) {
     pageButtons.push(
@@ -129,7 +131,7 @@ function EmployeeList() {
         <EntriesPerPageDropdown onChange={handleEntriesPerPageChange} />
         <SearchBar
           onSearch={handleSearch}
-          isFilterActive={filteredEmployees.length < 0}
+          isFilterActive={filteredEmployees.length > 0}
         />
       </div>
 

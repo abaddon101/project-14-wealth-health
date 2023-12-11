@@ -1,4 +1,6 @@
 // employeeSlice.ts
+
+// Import necessary modules from Redux Toolkit
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Define the shape of the Employee object
@@ -28,11 +30,12 @@ const initialEmployeesState: EmployeesState = {
 
 // Create the employees slice using createSlice from Redux Toolkit
 const employeesSlice = createSlice({
-  name: "employees",
-  initialState: initialEmployeesState,
+  name: "employees", // Name of the slice
+  initialState: initialEmployeesState, // Initial state for the slice
   reducers: {
     // Reducer to add an employee to the list
     addEmployee: (state, action: PayloadAction<Employee>) => {
+      // Mutate the state by pushing the new employee to the list
       state.list.push(action.payload);
     },
     // Add other reducers if necessary
@@ -40,5 +43,5 @@ const employeesSlice = createSlice({
 });
 
 // Export the action creators and reducer
-export const { addEmployee } = employeesSlice.actions;
-export default employeesSlice.reducer;
+export const { addEmployee } = employeesSlice.actions; // Action creator for adding an employee
+export default employeesSlice.reducer; // Reducer for handling state changes related to employees

@@ -1,4 +1,6 @@
 // CreateEmployee.tsx
+
+// Import necessary modules from React and external libraries
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
@@ -8,6 +10,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Modal from "react-bootstrap/Modal";
 
+// Import Redux hooks for managing state and dispatching actions
 import { useDispatch, useSelector } from "react-redux";
 import { updateField, resetForm } from "../Features/formSlice";
 import { addEmployee, Employee } from "../Features/employeeSlice";
@@ -29,6 +32,7 @@ const CreateEmployee: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [popupText, setPopupText] = useState("");
 
+  // Function to show the modal with a specific text
   const handleShowModal = (text: string) => {
     setPopupText(text);
     setShowModal(true);
@@ -61,8 +65,8 @@ const CreateEmployee: React.FC = () => {
 
       // Add validation for State and Department fields
       if (!formState.stateCountry || !formState.departments) {
-        // Gérer le cas où les champs ne sont pas remplis
-        // Vous pouvez afficher un message d'erreur ou effectuer une action appropriée
+        // Handle the case where the fields are not filled
+        // You can display an error message or take appropriate action
         return;
       }
 
@@ -94,24 +98,25 @@ const CreateEmployee: React.FC = () => {
     }
   };
 
+  // Return the JSX structure for rendering the CreateEmployee component
   return (
     <div>
+      {/* Navigation links */}
       <nav className="header-container">
         <Link to="/">
           <img src={logoWealthHealth} className="App-logo" alt="logo" />
         </Link>
-        {/* <Link to="/CreateEmployee">CREATE EMPLOYEE</Link> */}
         <Link to="/EmployeeList">Employee List</Link>
       </nav>
-      <div className="container text-center">
-        {/* Navigation links */}
 
+      {/* Form for creating a new employee */}
+      <div className="container text-center">
         <h5 className="form-title">Create Employee</h5>
-        {/* Employee creation form */}
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <div className="container-border">
-            {/* ... (Form fields and validation components) */}
+            {/* Form fields for employee information */}
             <Row className="mb-3">
+              {/* First Name */}
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label className="label-fixed-width">
                   First name
@@ -132,6 +137,8 @@ const CreateEmployee: React.FC = () => {
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
+
+              {/* Last Name */}
               <Form.Group as={Col} md="4" controlId="validationCustom02">
                 <Form.Label>Last name</Form.Label>
                 <Form.Control
@@ -146,9 +153,11 @@ const CreateEmployee: React.FC = () => {
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
             </Row>
+
             <Row className="mb-3">
+              {/* Date of Birth */}
               <Form.Group as={Col} md="4" controlId="validationCustom04">
-                <Form.Label>Date of Birth </Form.Label>{" "}
+                <Form.Label>Date of Birth</Form.Label>
                 <DatePicker
                   required
                   selected={
@@ -171,8 +180,9 @@ const CreateEmployee: React.FC = () => {
                 </Form.Control.Feedback>
               </Form.Group>
 
+              {/* Start Date */}
               <Form.Group as={Col} md="4" controlId="validationCustom04">
-                <Form.Label>Start Date </Form.Label>
+                <Form.Label>Start Date</Form.Label>
                 <DatePicker
                   required
                   selected={
@@ -194,7 +204,8 @@ const CreateEmployee: React.FC = () => {
               </Form.Group>
             </Row>
 
-            <h4>Adress</h4>
+            {/* Address Section */}
+            <h4>Address</h4>
             <Form.Group as={Col} md="6" controlId="validationCustom05">
               <Form.Label>Street</Form.Label>
               <Form.Control
@@ -208,7 +219,9 @@ const CreateEmployee: React.FC = () => {
                 Please provide a street.
               </Form.Control.Feedback>
             </Form.Group>
+
             <Col className="mb-3">
+              {/* City */}
               <Form.Group as={Col} md="6" controlId="validationCustom06">
                 <Form.Label>City</Form.Label>
                 <Form.Control
@@ -222,7 +235,9 @@ const CreateEmployee: React.FC = () => {
                   Please provide a valid city.
                 </Form.Control.Feedback>
               </Form.Group>
+
               <Row className="mb-3">
+                {/* State */}
                 <Form.Group as={Col} md="6" controlId="validationCustom07">
                   <Form.Label>State</Form.Label>
                   <Select
@@ -257,6 +272,7 @@ const CreateEmployee: React.FC = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
 
+                {/* Departments */}
                 <Form.Group as={Col} md="6" controlId="validationCustom09">
                   <Form.Label>Departments</Form.Label>
                   <Select
@@ -292,6 +308,7 @@ const CreateEmployee: React.FC = () => {
                 </Form.Group>
               </Row>
 
+              {/* Zip Code */}
               <Form.Group as={Col} md="3" controlId="validationCustom08">
                 <Form.Label>Zip Code</Form.Label>
                 <Form.Control
@@ -313,12 +330,14 @@ const CreateEmployee: React.FC = () => {
             </Col>
           </div>
 
+          {/* Submit Button */}
           <Button className="button-custom" variant="primary" type="submit">
             Save
           </Button>
         </Form>
       </div>
 
+      {/* Modal for displaying success message */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Success</Modal.Title>
@@ -334,4 +353,5 @@ const CreateEmployee: React.FC = () => {
   );
 };
 
+// Export the CreateEmployee component as the default export
 export default CreateEmployee;

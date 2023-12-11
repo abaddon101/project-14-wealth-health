@@ -1,4 +1,6 @@
 // formSlice.ts
+
+// Import necessary modules from Redux Toolkit
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Define the shape of the form state
@@ -29,14 +31,15 @@ const initialState: FormState = {
 
 // Create the form slice using createSlice from Redux Toolkit
 const formSlice = createSlice({
-  name: "form",
-  initialState,
+  name: "form", // Name of the slice
+  initialState, // Initial state for the slice
   reducers: {
     // Reducer to update a specific field in the form state
     updateField: (
       state,
       action: PayloadAction<{ field: string; value: string }>
     ) => {
+      // Extract the field and value from the action payload and update the state
       const { field, value } = action.payload;
       return { ...state, [field]: value };
     },
@@ -46,5 +49,5 @@ const formSlice = createSlice({
 });
 
 // Export the action creators and reducer
-export const { updateField, resetForm } = formSlice.actions;
-export default formSlice.reducer;
+export const { updateField, resetForm } = formSlice.actions; // Action creators for updating a field and resetting the form
+export default formSlice.reducer; // Reducer for handling state changes related to the form
