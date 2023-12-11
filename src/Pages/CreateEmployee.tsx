@@ -88,7 +88,7 @@ const CreateEmployee: React.FC = () => {
       dispatch(addEmployee(employeeData));
 
       // Log the submitted form data.
-      console.log("Form submitted:", employeeData);
+      // console.log("Form submitted:", employeeData);
 
       // Show the success pop-up
       handleShowModal("Employee has been successfully created!");
